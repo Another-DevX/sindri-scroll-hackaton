@@ -1,6 +1,31 @@
-// Define the main function for the circuit.
-fn main(X: Field, Y: pub Field) {
-    // Put your code here...
-    // Enforce the constraint that X must equal Y.
-    assert(X == Y);
+struct DBRecord {
+    cedula: Field,
+}
+
+fn main(cedula: Field,  address:pub Field){
+    let db:[DBRecord;3] = [
+        DBRecord{cedula: 123456789},
+        DBRecord{cedula: 987654321},
+        DBRecord{cedula: 112233445}
+    ];
+
+    // assert(cedula != address, "Cedula not found");
+    assert(verify(cedula, address, db), "Verification failed");
+  
+}
+
+
+unconstrained fn verify(cedula: Field, address: Field, db: [DBRecord;3]) -> bool {
+    let mut found = false;
+
+    for record in db {
+
+        if record.cedula == cedula{
+
+            found = true;
+            
+        }
+
+    }
+    found
 }
